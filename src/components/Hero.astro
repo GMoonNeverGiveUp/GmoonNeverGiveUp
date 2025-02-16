@@ -1,0 +1,94 @@
+---
+---
+<section class="hero">
+  <div class="hero-content">
+    <h1>Never Give Up to be a Galactic Genius</h1>
+    <p>
+      Discover our cutting-edge AI-powered dApp for meme creation and contests. Experience where gravity meets creativity!
+    </p>
+    <button class="btn" onclick="document.getElementById('contribute').scrollIntoView({behavior: 'smooth'})">
+      Join the Movement
+    </button>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 6rem 2rem;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 200%;
+    animation: gradientAnimation 10s ease infinite;
+    overflow: hidden;
+  }
+
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* The image will fully cover the hero section and move diagonally */
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('/assets/NeverGiveUp-cutted.jpg') no-repeat center center;
+    background-size: cover; /* Fully fills hero section */
+    
+    /* Moves diagonally and scales slightly to prevent gaps */
+    animation: diagonalMove 15s linear infinite alternate, fadeOpacity 5s ease-in-out infinite alternate;
+
+    /* Ensures the image itself is semi-transparent to let the gradient show through */
+    opacity: 0.7;
+    
+    /* Makes sure image fully covers the section without revealing background */
+    transform-origin: center;
+  }
+
+  /* Image moves diagonally while staying large */
+  @keyframes diagonalMove {
+    0% {
+      transform: scale(1.2) translate(-5%, -5%);
+    }
+    100% {
+      transform: scale(1.2) translate(5%, 5%);
+    }
+  }
+
+  /* Adds a subtle pulsing fade effect to the image */
+  @keyframes fadeOpacity {
+    0% { opacity: 0.6; }
+    100% { opacity: 0.8; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .btn {
+    background: #1e90ff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 1.5rem;
+  }
+  .btn:hover {
+    background: #1590e0;
+  }
+</style>

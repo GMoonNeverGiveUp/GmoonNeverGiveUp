@@ -1,6 +1,5 @@
 {
   "name": "square-solstice",
-  "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
@@ -10,8 +9,36 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.9.2",
-    "@astrojs/check": "^0.7.0",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/react": "^3.0.0",
+    "@openzeppelin/contracts": "^5.2.0",
+    "@tensorflow/tfjs": "^4.22.0",
+    "@walletconnect/ethereum-provider": "^2.19.1",
+    "astro": "^5.5.4",
+    "axios": "^1.8.4",
+    "body-parser": "^1.20.3",
+    "canvas": "^2.11.2",
+    "cheerio": "^1.0.0",
+    "cookie": "^1.0.2",
+    "dotenv": "^16.4.7",
+    "ethers": "^5.8.0",
+    "express": "^4.21.2",
+    "ipfs-http-client": "^60.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "nanostores": "^0.11.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "typescript": "^5.4.5"
-  }
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-etherscan": "^3.1.8",
+    "@types/jsonwebtoken": "^9.0.9",
+    "hardhat": "^2.22.19"
+  },
+  "description": "![Astro Boilerplate](https://github.com/fleek-tools/astro-template/assets/55561695/504fd185-e977-4350-9d74-467b7dabfd96)",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

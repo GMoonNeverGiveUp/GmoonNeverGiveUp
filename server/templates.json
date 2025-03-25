@@ -1,0 +1,16 @@
+[
+    {
+      "id": 1,
+      "title": "Distracted Boyfriend",
+      "imageUrl": "https://gateway.pinata.cloud/ipfs/QmExampleHash1",
+      "description": "A man distracted by another woman while his girlfriend looks on.",
+      "embedding": [0.1, 0.2, -0.3]
+    },
+    {
+      "id": 2,
+      "title": "Drake Hotline Bling",
+      "imageUrl": "https://gateway.pinata.cloud/ipfs/QmExampleHash2",
+      "description": "Drake approving or disapproving something.",
+      "embedding": [0.4, -0.1, 0.5]
+    }
+  ]

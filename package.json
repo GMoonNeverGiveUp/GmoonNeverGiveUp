@@ -1,12 +1,15 @@
 {
   "name": "square-solstice",
   "version": "0.0.1",
+  "description": "![Astro Boilerplate](https://github.com/fleek-tools/astro-template/assets/55561695/504fd185-e977-4350-9d74-467b7dabfd96)",
+  "main": "index.js",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -21,23 +24,23 @@
     "cheerio": "^1.0.0",
     "cookie": "^1.0.2",
     "dotenv": "^16.4.7",
-    "ethers": "^5.8.0",
+    "ethers": "^6.13.5",
     "express": "^4.21.2",
     "ipfs-http-client": "^60.0.1",
     "jsonwebtoken": "^9.0.2",
     "nanostores": "^0.11.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "@truffle/hdwallet-provider": "^2.1.0",
+    "truffle": "^5.11.5"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.2.3",
-    "@nomiclabs/hardhat-etherscan": "^3.1.8",
+    "@truffle/hdwallet-provider": "^2.1.15",
     "@types/jsonwebtoken": "^9.0.9",
-    "hardhat": "^2.22.19"
+    "@types/trusted-types": "^2.0.7",
+    "truffle": "^5.11.5"
   },
-  "description": "![Astro Boilerplate](https://github.com/fleek-tools/astro-template/assets/55561695/504fd185-e977-4350-9d74-467b7dabfd96)",
-  "main": "index.js",
   "keywords": [],
   "author": "",
   "license": "ISC"

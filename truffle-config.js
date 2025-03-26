@@ -4,12 +4,13 @@ const HDWalletProvider = require('@truffle/hdwallet-provider');
 module.exports = {
   networks: {
     gravityalpha: {
-      provider: () => new HDWalletProvider({
-        privateKeys: [process.env.PRIVATE_KEY],
-        providerOrUrl: process.env.RPC_URL,
-      }),
-      network_id: '1625', // Gravity Alpha Mainnet ID
-      gas: 8000000,       // Realistic gas limit for deployment
+      provider: () =>
+        new HDWalletProvider({
+          privateKeys: [process.env.PRIVATE_KEY],
+          providerOrUrl: process.env.RPC_URL,
+        }),
+      network_id: '1625',
+      gas: 15000000,       // Increased gas limit from 5,000,000 to 15,000,000
       gasPrice: 20000000000, // 20 Gwei
     },
   },

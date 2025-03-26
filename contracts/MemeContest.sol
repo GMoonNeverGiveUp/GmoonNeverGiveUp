@@ -18,7 +18,7 @@ contract MemeContest is Ownable {
     }
 
     Meme[] public memes;
-    mapping(address => uint256) public votesCast; // Tracks votes per address
+    mapping(address => uint256) public votesCast;
 
     event MemeSubmitted(uint256 indexed tokenId, address indexed creator, string ipfsHash);
     event Voted(uint256 indexed memeId, address indexed voter, uint256 tokenId);
@@ -32,7 +32,8 @@ contract MemeContest is Ownable {
 
     function submitMeme(string memory _ipfsHash) public {
         require(block.timestamp < contestEndTime, "Contest has ended");
-        uint256 tokenId = sbtContract.tokenOfOwnerByIndex(msg.sender, 0);
+        uint256 tokenId = sbtContract.userTokenId(msg.sender);
+        require(sbtContract.ownerOf(tokenId) == msg.sender, "Sender does not own an SBT");
         memes.push(Meme(tokenId, _ipfsHash, 0, false));
         emit MemeSubmitted(tokenId, msg.sender, _ipfsHash);
     }
@@ -40,11 +41,12 @@ contract MemeContest is Ownable {
     function voteForMeme(uint256 _memeId) public {
         require(block.timestamp < contestEndTime, "Contest has ended");
         require(_memeId < memes.length, "Invalid meme ID");
-        uint256 tokenId = sbtContract.tokenOfOwnerByIndex(msg.sender, 0); // Now used in event
+        uint256 tokenId = sbtContract.userTokenId(msg.sender);
+        require(sbtContract.ownerOf(tokenId) == msg.sender, "Sender does not own an SBT");
         require(votesCast[msg.sender] < 1, "Already voted");
         memes[_memeId].voteCount += 1;
         votesCast[msg.sender] += 1;
-        emit Voted(_memeId, msg.sender, tokenId); // Updated to include tokenId
+        emit Voted(_memeId, msg.sender, tokenId);
     }
 
     function endContest() public onlyOwner {
@@ -55,7 +57,7 @@ contract MemeContest is Ownable {
         emit ContestWinner(winningMemeId, winner);
         contestStartTime = block.timestamp;
         contestEndTime = contestStartTime + CONTEST_DURATION;
-        delete memes; // Reset for next contest
+        delete memes;
     }
 
     function findWinningMeme() internal view returns (uint256) {

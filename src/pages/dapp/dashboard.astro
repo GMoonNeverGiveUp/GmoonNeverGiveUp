@@ -1,16 +1,16 @@
 ---
 import jwt from 'jsonwebtoken';
 import MemeCreator from "../../components/MemeCreator.jsx";
-import { ethers } from "ethers";
-import MemeContestArtifact from "../../../artifacts/contracts/MemeContest.sol/MemeContest.json";
+// Import BrowserProvider and Contract from ethers v6:
+import { BrowserProvider, Contract, parseEther } from "ethers";
+// Update the artifact import path according to your build output:
+import MemeContestArtifact from "../../../build/contracts/MemeContest.json";
 
-// Define a custom interface for the JWT payload
 interface MyUserPayload extends jwt.JwtPayload {
   username: string;
   discordId: string;
 }
 
-// JWT verification (assumes cookie-based auth)
 const token = Astro.cookies.get('token')?.value;
 if (!token) return Astro.redirect('/login');
 let user: MyUserPayload;
@@ -22,9 +22,8 @@ try {
 }
 const currentUser = user;
 
-// NGU Token address
 const NGU_TOKEN_ADDRESS = "0xc1aa125280bd8dc4d747fa2170255369c3075976";
-const MEME_CONTEST_ADDRESS = import.meta.env.MEME_CONTEST_ADDRESS; // Set in .env
+const MEME_CONTEST_ADDRESS = import.meta.env.MEME_CONTEST_ADDRESS;
 ---
 
 <html lang="en">
@@ -53,9 +52,10 @@ const MEME_CONTEST_ADDRESS = import.meta.env.MEME_CONTEST_ADDRESS; // Set in .en
           alert("Please connect your wallet first.");
           return;
         }
-        const provider = new ethers.providers.Web3Provider((window as any).walletConnectProvider);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(MEME_CONTEST_ADDRESS, MemeContestArtifact.abi, signer);
+        // Use BrowserProvider for ethers v6:
+        const provider = new BrowserProvider(window.ethereum || window.walletConnectProvider);
+        const signer = await provider.getSigner();
+        const contract = new Contract(MEME_CONTEST_ADDRESS, MemeContestArtifact.abi, signer);
         const tx = await contract.submitMeme(ipfsHash);
         await tx.wait();
         alert("Meme submitted successfully!");
@@ -69,22 +69,19 @@ const MEME_CONTEST_ADDRESS = import.meta.env.MEME_CONTEST_ADDRESS; // Set in .en
       <div id="memeGrid"></div>
     </section>
 
-    <script type="module" define:vars={{ MEME_CONTEST_ABI: MemeContestArtifact.abi, MEME_CONTEST_ADDRESS, NGU_TOKEN_ADDRESS }}>
-      import { ethers } from "ethers";
+    <!-- Updated inline script with is:inline -->
+    <script type="module" is:inline>
+      import { BrowserProvider, Contract, parseEther } from "ethers";
       import { EthereumProvider } from "@walletconnect/ethereum-provider";
 
       const ERC20_ABI = [
         "function transfer(address to, uint256 value) external returns (bool)",
         "function approve(address spender, uint256 value) external returns (bool)"
       ];
-
       let provider, signer;
-
-      // Initialize WalletConnect provider
       const walletConnectProvider = await EthereumProvider.init({
-        projectId: "YOUR_WALLET_CONNECT_PROJECT_ID", // Replace with actual project ID
-        chains: [1625], // Gravity Alpha Mainnet chain ID
-        optionalChains: [],
+        projectId: "YOUR_WALLET_CONNECT_PROJECT_ID",
+        chains: [1625],
         rpcMap: { 1625: "https://rpc.gravity.xyz" },
         showQrModal: true
       });
@@ -93,8 +90,8 @@ const MEME_CONTEST_ADDRESS = import.meta.env.MEME_CONTEST_ADDRESS; // Set in .en
       document.getElementById("connectWallet").addEventListener("click", async () => {
         try {
           await walletConnectProvider.connect();
-          provider = new ethers.providers.Web3Provider(walletConnectProvider);
-          signer = provider.getSigner();
+          provider = new BrowserProvider(walletConnectProvider);
+          signer = await provider.getSigner();
           const address = await signer.getAddress();
           document.getElementById("walletStatus").textContent = `Wallet connected: ${address.slice(0, 6)}...${address.slice(-4)}`;
           loadMemes();
@@ -109,7 +106,7 @@ const MEME_CONTEST_ADDRESS = import.meta.env.MEME_CONTEST_ADDRESS; // Set in .en
           alert("Please connect your wallet first.");
           return;
         }
-        const contract = new ethers.Contract(MEME_CONTEST_ADDRESS, MEME_CONTEST_ABI, signer);
+        const contract = new Contract(MEME_CONTEST_ADDRESS, MemeContestArtifact.abi, signer);
         const address = await signer.getAddress();
         const currentTokenId = Number(await contract.currentTokenId());
         const grid = document.getElementById("memeGrid");
@@ -128,13 +125,12 @@ const MEME_CONTEST_ADDRESS = import.meta.env.MEME_CONTEST_ADDRESS; // Set in .en
             grid.appendChild(card);
           }
         }
-
         document.querySelectorAll(".vote-btn").forEach(btn => {
           btn.addEventListener("click", async () => {
             const tokenId = btn.dataset.id;
-            const nguContract = new ethers.Contract(NGU_TOKEN_ADDRESS, ERC20_ABI, signer);
-            const contestContract = new ethers.Contract(MEME_CONTEST_ADDRESS, MEME_CONTEST_ABI, signer);
-            await nguContract.approve(MEME_CONTEST_ADDRESS, ethers.utils.parseEther("1"));
+            const nguContract = new Contract(NGU_TOKEN_ADDRESS, ERC20_ABI, signer);
+            const contestContract = new Contract(MEME_CONTEST_ADDRESS, MemeContestArtifact.abi, signer);
+            await nguContract.approve(MEME_CONTEST_ADDRESS, parseEther("1"));
             const tx = await contestContract.voteMeme(tokenId);
             await tx.wait();
             alert("Vote submitted successfully!");

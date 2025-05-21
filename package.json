@@ -1,27 +1,22 @@
 {
   "name": "square-solstice",
   "version": "0.0.1",
-  "description": "![Astro Boilerplate](https://github.com/fleek-tools/astro-template/assets/55561695/504fd185-e977-4350-9d74-467b7dabfd96)",
-  "main": "index.js",
+  "description": "Offline Gravity Meme Builder—static Astro site",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev":     "astro dev",
+    "build":   "astro build",
+    "preview": "astro preview"
   },
   "engines": {
     "node": ">=18.19"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/react": "^3.0.0",
-    "typescript": "^5.4.5"
+    "astro":         "^5.5.4",
+    "@astrojs/react":"^3.0.0",
+    "@astrojs/check":"^0.9.4",
+    "typescript":    "^5.4.5"
   },
-   "devDependencies": {
-   "@astrojs/adapter-static": "^4.0.0",
-   "typescript": "^5.4.5",
-   "rimraf": "^5.0.0"
+  "devDependencies": {
+    "@types/node":   "^18.17.1"
   }
 }

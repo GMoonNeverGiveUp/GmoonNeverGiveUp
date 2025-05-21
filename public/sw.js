@@ -7,16 +7,16 @@ self.addEventListener("install", (event) => {
     caches.open(CACHE).then((cache) =>
       cache.addAll([
         OFFLINE_URL,
-        "public/styles.css",
-        "public/script.js",
-        "public/assets/Gravity Icon Dark.png",
-        "public/assets/Gravity Icon Light.png",
-        "public/assets/Gravity_Logo_Wordmark_Black.png",
-        "public/assets/Gravity_Logo_Wordmark_White.png",
-        "public/assets/Round Gradient Background.png",
-        "public/assets/Square Gradient Background.png",
-        "public/lib/gif.worker.js",
-        "public/lib/gif.js"
+        "/styles.css",
+        "/script.js",
+        "/assets/Gravity Icon Dark.png",
+        "/assets/Gravity Icon Light.png",
+        "/assets/Gravity_Logo_Wordmark_Black.png",
+        "/assets/Gravity_Logo_Wordmark_White.png",
+        "/assets/Round Gradient Background.png",
+        "/assets/Square Gradient Background.png",
+        "/lib/gif.worker.js",
+        "/lib/gif.js"
       ])
     )
   );

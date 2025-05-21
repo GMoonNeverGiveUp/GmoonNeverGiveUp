@@ -1,0 +1,152 @@
+---  
+// No frontmatter needed unless you want to pass props
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gravity Meme Builder</title>
+  <link rel="stylesheet" href="/styles.css"/>
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="nav-logo">Gravity Meme Builder</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#contacts">Contacts</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="app-container">
+    <!-- Left Sidebar -->
+    <aside class="controls-panel">
+      <!-- Upload -->
+      <div class="tool-section open">
+        <h3 class="section-header">Upload Images</h3>
+        <div class="section-content upload-section">
+          <label class="upload-label">
+            <span>Select your images (background first):</span>
+            <input type="file" id="image-upload" accept="image/*" multiple/>
+          </label>
+        </div>
+      </div>
+      <!-- Text -->
+      <div class="tool-section">
+        <h3 class="section-header">Text Tools</h3>
+        <div class="section-content form-grid">
+          <button id="add-text-btn">Add Text</button>
+          <label>Text:<input type="text" id="text-input" placeholder="Enter text"/></label>
+          <label>Font:<select id="font-family-input"><option>Impact</option><option>Anton</option></select></label>
+          <label>Size:<input type="range" id="font-size-input" min="10" max="200" value="40"/><span id="font-size-preview">40px</span></label>
+          <label>Color:<input type="color" id="font-color-input" value="#000000"/></label>
+          <label>Outline Color:<input type="color" id="outline-color-input" value="#000000"/></label>
+          <label>Outline Width:<input type="number" id="outline-width-input" min="0" max="20" value="0"/></label>
+          <label>Shadow Color:<input type="color" id="shadow-color-input" value="#000000"/></label>
+          <label>Shadow Blur:<input type="number" id="shadow-blur-input" min="0" max="50" value="0"/></label>
+          <label>Shadow Off X:<input type="number" id="shadow-offset-x-input" min="-50" max="50" value="0"/></label>
+          <label>Shadow Off Y:<input type="number" id="shadow-offset-y-input" min="-50" max="50" value="0"/></label>
+          <button id="apply-text-btn">Apply Text</button>
+        </div>
+      </div>
+      <!-- Stickers -->
+      <div class="tool-section">
+        <h3 class="section-header">Stickers</h3>
+        <div class="section-content stickers-grid" id="sticker-library"></div>
+      </div>
+      <!-- Draw & Select -->
+      <div class="tool-section">
+        <h3 class="section-header">Draw & Select</h3>
+        <div class="section-content">
+          <label>Mode:<select id="tool-mode"><option value="select">Select</option><option value="pencil">Pencil</option><option value="rectangle">Rect</option><option value="circle">Circle</option></select></label>
+          <label>Color:<input type="color" id="draw-color" value="#000000"/></label>
+          <label>Width:<input type="number" id="draw-width" min="1" max="50" value="4"/></label>
+          <button id="clear-drawing-btn">Clear Drawings</button>
+        </div>
+      </div>
+      <!-- Layout -->
+      <div class="tool-section">
+        <h3 class="section-header">Layout</h3>
+        <div class="section-content">
+          <label><input type="checkbox" id="grid-toggle"/> Show Grid</label>
+          <label>Grid Spacing:<input type="number" id="grid-spacing" value="50"/></label>
+          <label><input type="checkbox" id="snap-center-toggle"/> Snap to Key Positions</label>
+        </div>
+      </div>
+      <!-- View -->
+      <div class="tool-section">
+        <h3 class="section-header">View</h3>
+        <div class="section-content">
+          <button id="zoom-in-btn">Zoom In</button>
+          <button id="zoom-out-btn">Zoom Out</button>
+          <button id="reset-view-btn">Reset View</button>
+        </div>
+      </div>
+      <!-- Layers -->
+      <div class="tool-section">
+        <h3 class="section-header">Layers</h3>
+        <div class="section-content"><ul id="layers-list"></ul></div>
+      </div>
+      <!-- History -->
+      <div class="tool-section">
+        <h3 class="section-header">History</h3>
+        <div class="section-content">
+          <button id="undo-btn">Undo (Ctrl+Z)</button>
+          <button id="redo-btn">Redo (Ctrl+Y)</button>
+        </div>
+      </div>
+      <!-- Project -->
+      <div class="tool-section">
+        <h3 class="section-header">Project</h3>
+        <div class="section-content">
+          <button id="save-project-btn">Save Project</button>
+          <button id="load-project-btn">Load Project</button>
+          <input type="file" id="load-project-input" accept=".json" hidden/>
+        </div>
+      </div>
+    </aside>
+
+    <div id="sidebar-resizer"></div>
+
+    <!-- Canvas -->
+    <main class="canvas-container">
+      <canvas id="meme-canvas"></canvas>
+    </main>
+
+    <!-- Right Frames Sidebar -->
+    <aside class="frames-panel">
+      <div class="frames-grid" id="frames-list"></div>
+      <div class="frames-controls">
+        <button id="add-frame-btn">+ Frame</button>
+        <button id="clear-frames-btn">🗑 Clear</button>
+        <button id="export-gif-btn">▶ Export GIF</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Info Sections -->
+  <section id="about" class="info-section">
+    <h2>About</h2>
+    <p>Gravity Meme Builder—add text, stickers, draw, export as GIF, all on-canvas.</p>
+  </section>
+  <section id="history" class="info-section">
+    <h2>History</h2>
+    <p>Launched 2025, empowering creators worldwide.</p>
+  </section>
+  <section id="contacts" class="info-section">
+    <h2>Contacts</h2>
+    <ul><li><strong>Support:</strong> support@gravitybuilder.io</li></ul>
+  </section>
+
+  <script src="lib/gif.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

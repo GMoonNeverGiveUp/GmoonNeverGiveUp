@@ -11,38 +11,17 @@
     "astro": "astro",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": ">=18.19"
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^3.0.0",
-    "@nanostores/react": "^0.8.4",
-    "@openzeppelin/contracts": "^5.2.0",
-    "@tensorflow/tfjs": "^4.22.0",
-    "@truffle/hdwallet-provider": "^2.1.0",
-    "@walletconnect/ethereum-provider": "^2.19.1",
-    "astro": "^5.5.4",
-    "axios": "^1.8.4",
-    "body-parser": "^1.20.3",
-    "canvas": "^2.11.2",
-    "cheerio": "^1.0.0",
-    "cookie": "^1.0.2",
-    "dotenv": "^16.4.7",
-    "ethers": "^6.13.5",
-    "express": "^4.21.2",
-    "ipfs-http-client": "^60.0.1",
-    "jsonwebtoken": "^9.0.2",
-    "nanostores": "^0.11.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "truffle": "^5.11.5",
     "typescript": "^5.4.5"
   },
-  "devDependencies": {
-    "@truffle/hdwallet-provider": "^2.1.15",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/trusted-types": "^2.0.7",
-    "truffle": "^5.11.5"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+   "devDependencies": {
+   "@astrojs/node": "^5.0.0",
+   "typescript": "^5.4.5",
+   "rimraf": "^5.0.0"
+  }
 }

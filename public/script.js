@@ -365,11 +365,24 @@ class MemeBuilder {
   
       const name = document.createElement('input');
       name.type = 'text';
-      name.value = layer.name || layer.text || layer.type;
-      name.addEventListener('change', () => {
-        layer.name = name.value;
-        this._snapshot('Rename Layer');
-      });
+      if (layer.type === 'text') {
+        name.value = layer.text;
+        name.addEventListener('change', () => {
+          layer.text = name.value;
+          // re-measure in case width changed
+          this.ctx.font = `${layer.size}px "${layer.family}", sans-serif`;
+          layer.width  = this.ctx.measureText(layer.text).width;
+          layer.height = layer.size;
+          this._drawAll();
+          this._snapshot('Edit Text');
+        });
+      } else {
+        name.value = layer.name || layer.type;
+        name.addEventListener('change', () => {
+          layer.name = name.value;
+          this._snapshot('Rename Layer');
+        });
+      }
   
       const visible = document.createElement('input');
       visible.type = 'checkbox';
@@ -801,6 +814,14 @@ class MemeBuilder {
     if (x2-x1<minSz) x2=x1+minSz;
     if (y2-y1<minSz) y2=y1+minSz;
     L.x=x1; L.y=y1; L.width=x2-x1; L.height=y2-y1;
+        // ——— TEXT RESIZE SUPPORT ———
+    if (L.type === 'text') {
+      // map height → font size & re-measure width
+      L.size = L.height;
+      this.ctx.font = `${L.size}px "${L.family}", sans-serif`;
+      L.width  = this.ctx.measureText(L.text).width;
+      L.height = L.size;
+    }
     this._drawAll();
   }
 

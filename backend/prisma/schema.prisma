@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  address    String   @unique
+  username   String?
+  avatarUrl  String?
+  reputation BigInt   @default(0)
+  badges     Badge[]
+  memes      Meme[] // ← back-relation for Meme.creator
+  votes      Vote[] // ← back-relation for Vote.user
+  media      Media[] // ← back-relation for Media.uploader
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Meme {
+  id            String   @id @default(uuid())
+  creatorId     String
+  ipfsHash      String
+  textLayers    Json
+  stickers      Json
+  filters       Json
+  totalVotes    BigInt   @default(0)
+  totalImpulses BigInt   @default(0)
+  tokenId       BigInt?
+  createdAt     DateTime @default(now())
+
+  creator User   @relation(fields: [creatorId], references: [id])
+  votes   Vote[] // ← back-relation for Vote.meme
+}
+
+model Vote {
+  id        String   @id @default(uuid())
+  userId    String
+  memeId    String
+  amount    BigInt
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  meme Meme @relation(fields: [memeId], references: [id])
+}
+
+model Badge {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  iconUrl     String
+  userId      String
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+/// store every upload for audit & pinning
+model Media {
+  id         String   @id @default(uuid())
+  cid        String   @unique
+  uploaderId String
+  createdAt  DateTime @default(now())
+
+  uploader User @relation(fields: [uploaderId], references: [id])
+}
+
+/// log on-chain events for dashboards & debugging
+model TokenEvent {
+  id        String   @id @default(uuid())
+  type      String // e.g. "MINT", "BURN", "VOTE"
+  txHash    String
+  meta      Json?
+  createdAt DateTime @default(now())
+}

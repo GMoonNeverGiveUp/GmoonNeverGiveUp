@@ -1,0 +1,9 @@
+{
+  // other settings can stay above/below
+  "files.associations": {
+    ".lintignore": "ignore",
+    ".dockerignore": "ignore",
+    // Force any file named exactly ".snapshotignore" to use the Ignore grammar
+    ".snapshotignore": "ignore"
+  }
+}

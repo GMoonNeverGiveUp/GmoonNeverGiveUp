@@ -1,24 +1,47 @@
 {
-  "name": "square-solstice",
-  "version": "0.0.1",
-  "description": "Offline Gravity Meme Builder—static Astro site",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.8",
+    "@nomicfoundation/hardhat-ethers": "^3.0.8",
+    "@nomicfoundation/hardhat-ignition": "^0.15.11",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.11",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.14",
+    "@nomicfoundation/ignition-core": "^0.15.11",
+    "@prisma/client": "^6.8.2",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "@types/chai": "^4.3.20",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.15.21",
+    "chai": "^4.5.0",
+    "dotenv": "^16.5.0",
+    "hardhat": "^2.24.1",
+    "hardhat-gas-reporter": "^1.0.10",
+    "hardhat-network-helpers": "^0.0.1",
+    "prisma": "^6.8.2",
+    "solidity-coverage": "^0.8.16",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typechain": "^8.3.2",
+    "typechain-types": "^0.0.1",
+    "typescript": "^5.8.3"
   },
-  "engines": {
-    "node": ">=18.19"
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy:goerli": "hardhat run scripts/deploy-contracts.ts --network goerli",
+    "deploy:mainnet": "hardhat run scripts/deploy-contracts.ts --network mainnet"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/react": "^3.6.3",
-    "astro": "^5.5.4",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "typescript": "^5.4.5"
-  },
-  "devDependencies": {
-    "@types/node": "^18.17.1"
+    "@openzeppelin/contracts": "^4.9.3",
+    "cors": "^2.8.5",
+    "ethers": "^6.6.0",
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "ipfs-http-client": "^60.0.1",
+    "jsonwebtoken": "^9.0.2"
   }
 }

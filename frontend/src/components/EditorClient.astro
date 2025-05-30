@@ -1,18 +1,8 @@
----  
-// No frontmatter needed unless you want to pass props
 ---
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gravity Meme Builder</title>
-  <link rel="stylesheet" href="/styles.css"/>
-  <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js");
-  }
-  </script>
-</head>
-<body>
+export const ssr = false;
+---
+
+<div id="editor-root">
   <header>
     <nav class="navbar">
       <div class="nav-logo">Gravity Meme Builder</div>
@@ -22,6 +12,12 @@
         <li><a href="#contacts">Contacts</a></li>
       </ul>
     </nav>
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+        .catch(err => console.error('SW registration failed:', err));
+    }
+    </script>
   </header>
 
   <div class="app-container">
@@ -143,6 +139,6 @@
     <h2>Contacts</h2>
     <ul><li><strong>Support:</strong> support@gravitybuilder.io</li></ul>
   </section>
+
   <script src="/script.js" defer></script>
-</body>
-</html>
+</div>

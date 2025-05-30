@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    # Compose auto-loads the root .env so
+    # POSTGRES_USER / POSTGRES_PASSWORD / POSTGRES_DB are defined
+    environment:
+      POSTGRES_USER:     ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB:       ${POSTGRES_DB}
+      DATABASE_URL:      ${DATABASE_URL}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    # Root .env also gives your app all the vars
+    environment:
+      RPC_URL:            ${RPC_URL}
+      WS_RPC_URL:         ${WS_RPC_URL}
+      PRIVATE_KEY:        ${PRIVATE_KEY}
+      MEME_NFT_ADDRESS:   ${MEME_NFT_ADDRESS}
+      MEME_VOTING_ADDRESS: ${MEME_VOTING_ADDRESS}
+      DATABASE_URL:       ${DATABASE_URL}
+      IPFS_REPO_PATH:     ${IPFS_REPO_PATH}
+      IPFS_GATEWAY_URL:   ${IPFS_GATEWAY_URL}
+    ports:
+      - "4000:4000"   # match your app.listen(PORT)
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app          # source code
+      - ipfs_repo:/data/ipfs    # embedded Helia repo
+
+volumes:
+  db_data:
+  ipfs_repo:

@@ -4,7 +4,7 @@
   "description": "Offline Gravity Meme Builder—static Astro site",
   "scripts": {
     "dev":     "astro dev",
-    "build":   "astro build",
+    "build":   "npm install --legacy-peer-deps && astro build",
     "preview": "astro preview"
   },
   "engines": {
